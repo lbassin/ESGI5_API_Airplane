@@ -23,6 +23,11 @@ class Pet
      */
     private $registration;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ticket", inversedBy="pets")
+     */
+    private $ticket;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,6 +41,18 @@ class Pet
     public function setRegistration(string $registration): self
     {
         $this->registration = $registration;
+
+        return $this;
+    }
+
+    public function getTicket(): ?Ticket
+    {
+        return $this->ticket;
+    }
+
+    public function setTicket(?Ticket $ticket): self
+    {
+        $this->ticket = $ticket;
 
         return $this;
     }
