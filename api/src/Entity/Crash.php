@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,6 +34,16 @@ class Crash
      * @ORM\OneToOne(targetEntity="App\Entity\Flight", mappedBy="crash", cascade={"persist", "remove"})
      */
     private $flight;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Dead", mappedBy="crash", orphanRemoval=true)
+     */
+    private $deads;
+
+    public function __construct()
+    {
+        $this->deads = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +87,37 @@ class Crash
         $newCrash = $flight === null ? null : $this;
         if ($newCrash !== $flight->getCrash()) {
             $flight->setCrash($newCrash);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Dead[]
+     */
+    public function getDeads(): Collection
+    {
+        return $this->deads;
+    }
+
+    public function addDead(Dead $dead): self
+    {
+        if (!$this->deads->contains($dead)) {
+            $this->deads[] = $dead;
+            $dead->setCrash($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDead(Dead $dead): self
+    {
+        if ($this->deads->contains($dead)) {
+            $this->deads->removeElement($dead);
+            // set the owning side to null (unless already changed)
+            if ($dead->getCrash() === $this) {
+                $dead->setCrash(null);
+            }
         }
 
         return $this;
