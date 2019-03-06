@@ -37,7 +37,7 @@ class Flight
     private $arrival;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Airport", inversedBy="flightsÂ_departure")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Airport", inversedBy="flights_departure")
      */
     private $departure;
 
