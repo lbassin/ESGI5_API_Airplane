@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,16 @@ class PlaneModel
      * @ORM\Column(type="float")
      */
     private $reliabilitÃy;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Plane", mappedBy="model", orphanRemoval=true)
+     */
+    private $planes;
+
+    public function __construct()
+    {
+        $this->planes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -87,6 +99,37 @@ class PlaneModel
     public function setReliabilitÃy(float $reliabilitÃy): self
     {
         $this->reliabilitÃy = $reliabilitÃy;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Plane[]
+     */
+    public function getPlanes(): Collection
+    {
+        return $this->planes;
+    }
+
+    public function addPlane(Plane $plane): self
+    {
+        if (!$this->planes->contains($plane)) {
+            $this->planes[] = $plane;
+            $plane->setModel($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlane(Plane $plane): self
+    {
+        if ($this->planes->contains($plane)) {
+            $this->planes->removeElement($plane);
+            // set the owning side to null (unless already changed)
+            if ($plane->getModel() === $this) {
+                $plane->setModel(null);
+            }
+        }
 
         return $this;
     }

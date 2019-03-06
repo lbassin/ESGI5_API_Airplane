@@ -23,6 +23,12 @@ class Flight
      */
     private $code;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Plane", inversedBy="flights")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $plane;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,6 +42,18 @@ class Flight
     public function setCode(string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getPlane(): ?Plane
+    {
+        return $this->plane;
+    }
+
+    public function setPlane(?Plane $plane): self
+    {
+        $this->plane = $plane;
 
         return $this;
     }

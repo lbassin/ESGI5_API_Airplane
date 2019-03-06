@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,6 +25,16 @@ class Company
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Plane", mappedBy="company", orphanRemoval=true)
+     */
+    private $planes;
+
+    public function __construct()
+    {
+        $this->planes = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -36,6 +48,37 @@ class Company
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Plane[]
+     */
+    public function getPlanes(): Collection
+    {
+        return $this->planes;
+    }
+
+    public function addPlane(Plane $plane): self
+    {
+        if (!$this->planes->contains($plane)) {
+            $this->planes[] = $plane;
+            $plane->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlane(Plane $plane): self
+    {
+        if ($this->planes->contains($plane)) {
+            $this->planes->removeElement($plane);
+            // set the owning side to null (unless already changed)
+            if ($plane->getCompany() === $this) {
+                $plane->setCompany(null);
+            }
+        }
 
         return $this;
     }
