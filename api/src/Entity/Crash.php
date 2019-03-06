@@ -29,10 +29,9 @@ class Crash
     private $found;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Plane", inversedBy="crash", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\Flight", mappedBy="crash", cascade={"persist", "remove"})
      */
-    private $plane;
+    private $flight;
 
     public function getId(): ?int
     {
@@ -63,14 +62,20 @@ class Crash
         return $this;
     }
 
-    public function getPlane(): ?Plane
+    public function getFlight(): ?Flight
     {
-        return $this->plane;
+        return $this->flight;
     }
 
-    public function setPlane(Plane $plane): self
+    public function setFlight(?Flight $flight): self
     {
-        $this->plane = $plane;
+        $this->flight = $flight;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newCrash = $flight === null ? null : $this;
+        if ($newCrash !== $flight->getCrash()) {
+            $flight->setCrash($newCrash);
+        }
 
         return $this;
     }

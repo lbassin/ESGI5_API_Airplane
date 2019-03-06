@@ -48,6 +48,11 @@ class Flight
      */
     private $tickets;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Crash", inversedBy="flight", cascade={"persist", "remove"})
+     */
+    private $crash;
+
     public function __construct()
     {
         $this->arrival = new ArrayCollection();
@@ -163,6 +168,18 @@ class Flight
                 $ticket->setFlight(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCrash(): ?Crash
+    {
+        return $this->crash;
+    }
+
+    public function setCrash(?Crash $crash): self
+    {
+        $this->crash = $crash;
 
         return $this;
     }

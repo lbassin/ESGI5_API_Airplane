@@ -42,11 +42,6 @@ class Plane
      */
     private $flights;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Crash", mappedBy="plane", cascade={"persist", "remove"})
-     */
-    private $crash;
-
     public function __construct()
     {
         $this->flights = new ArrayCollection();
@@ -119,23 +114,6 @@ class Plane
             if ($flight->getPlane() === $this) {
                 $flight->setPlane(null);
             }
-        }
-
-        return $this;
-    }
-
-    public function getCrash(): ?Crash
-    {
-        return $this->crash;
-    }
-
-    public function setCrash(Crash $crash): self
-    {
-        $this->crash = $crash;
-
-        // set the owning side of the relation if necessary
-        if ($this !== $crash->getPlane()) {
-            $crash->setPlane($this);
         }
 
         return $this;
