@@ -38,7 +38,7 @@ class PlaneModel
     /**
      * @ORM\Column(type="float")
      */
-    private $reliabilitÃy;
+    private $reliability;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Plane", mappedBy="model", orphanRemoval=true)
@@ -91,14 +91,14 @@ class PlaneModel
         return $this;
     }
 
-    public function getReliabilitÃy(): ?float
+    public function getReliability(): ?float
     {
-        return $this->reliabilitÃy;
+        return $this->reliability;
     }
 
-    public function setReliabilitÃy(float $reliabilitÃy): self
+    public function setReliability(float $reliability): self
     {
-        $this->reliabilitÃy = $reliabilitÃy;
+        $this->reliability = $reliability;
 
         return $this;
     }
