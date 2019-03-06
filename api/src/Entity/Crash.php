@@ -28,6 +28,12 @@ class Crash
      */
     private $found;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Plane", inversedBy="crash", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $plane;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -53,6 +59,18 @@ class Crash
     public function setFound(bool $found): self
     {
         $this->found = $found;
+
+        return $this;
+    }
+
+    public function getPlane(): ?Plane
+    {
+        return $this->plane;
+    }
+
+    public function setPlane(Plane $plane): self
+    {
+        $this->plane = $plane;
 
         return $this;
     }
