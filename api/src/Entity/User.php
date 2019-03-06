@@ -5,9 +5,12 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+        normalizationContext={"groups"={"user_read"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user_app")
  */
@@ -22,11 +25,15 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     *
+     * @Groups({"user_read"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     *
+     * @Groups({"user_read"})
      */
     private $roles = [];
 
@@ -35,6 +42,11 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @Groups({"user_read"})
+     */
+    private $plainPassword;
 
     public function getId(): ?int
     {
@@ -111,6 +123,18 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+         $this->plainPassword = null;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }
