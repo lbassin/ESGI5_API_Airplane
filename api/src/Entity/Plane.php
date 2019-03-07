@@ -11,7 +11,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"plane_read"}}
+ *     normalizationContext={"groups"={"plane_read"}},
+ *     denormalizationContext={"groups"={"plane_write"}}
  * )
  *
  * @ORM\Entity(repositoryClass="App\Repository\PlaneRepository")
@@ -27,7 +28,9 @@ class Plane
 
     /**
      * @ORM\Column(type="string", length=8)
-     * @Groups({"plane_read"})
+     *
+     * @Groups({"plane_read", "plane_write"})
+     *
      * @Assert\NotBlank()
      * @Assert\Length(max="8")
      */
@@ -36,14 +39,16 @@ class Plane
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="planes")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"plane_read"})
+     *
+     * @Groups({"plane_read", "plane_write"})
      */
     private $company;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlaneModel", inversedBy="planes")
      * @ORM\JoinColumn(nullable=false)
-     * @Groups({"plane_read"})
+     *
+     * @Groups({"plane_read", "plane_write"})
      */
     private $model;
 
