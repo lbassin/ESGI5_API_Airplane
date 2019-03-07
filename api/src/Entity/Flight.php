@@ -41,7 +41,7 @@ class Flight
     private $plane;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Airport", inversedBy="flights")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Airport", inversedBy="flights_arrival")
      * @ORM\JoinTable(name="flight_airport_arrival")
      */
     private $arrival;

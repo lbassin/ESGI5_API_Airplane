@@ -6,8 +6,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"plane_model_read"}},
+ *     denormalizationContext={"groups"={"plane_model_write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\PlaneModelRepository")
  */
 class PlaneModel
@@ -21,21 +27,41 @@ class PlaneModel
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"plane_model_read", "plane_model_write"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255")
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"plane_model_read", "plane_model_write"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThanOrEqual(0)
      */
     private $places;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"plane_model_read", "plane_model_write"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan(0)
      */
     private $gazoline;
 
     /**
      * @ORM\Column(type="float")
+     *
+     * @Groups({"plane_model_read"})
+     *
+     * @Assert\GreaterThanOrEqual(0)
+     * @Assert\LessThanOrEqual(100)
      */
     private $reliability;
 
@@ -95,7 +121,7 @@ class PlaneModel
         return $this->reliability;
     }
 
-    public function setReliability(float $reliability): self
+    public function setReliability(?float $reliability): self
     {
         $this->reliability = $reliability;
 
