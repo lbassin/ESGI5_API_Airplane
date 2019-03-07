@@ -19,6 +19,25 @@ class TicketRepository extends ServiceEntityRepository
         parent::__construct($registry, Ticket::class);
     }
 
+    public function save(Ticket $ticket)
+    {
+        $this->getEntityManager()->persist($ticket);
+        $this->getEntityManager()->flush();
+    }
+
+    public function removeAll(array $tickets)
+    {
+        foreach ($tickets as $ticket) {
+            if (!$ticket instanceof Ticket) {
+                continue;
+            }
+
+            $this->getEntityManager()->remove($ticket);
+        }
+
+        $this->getEntityManager()->flush();
+    }
+
     // /**
     //  * @return Ticket[] Returns an array of Ticket objects
     //  */
