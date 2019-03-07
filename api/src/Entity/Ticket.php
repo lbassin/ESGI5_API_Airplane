@@ -33,15 +33,14 @@ class Ticket
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Passenger", inversedBy="tickets")
-     * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotNull()
+     * @ORM\JoinColumn(nullable=true)
      */
     private $passenger;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Flight", inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotNull()
+     * @Groups({"ticket_write", "ticket_read"})
      */
     private $flight;
 

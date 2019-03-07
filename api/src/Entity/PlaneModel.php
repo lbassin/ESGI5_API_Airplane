@@ -50,7 +50,7 @@ class PlaneModel
     private $gazoline;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      * @Groups({"plane_model_read"})
      * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThanOrEqual(100)
