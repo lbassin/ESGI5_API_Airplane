@@ -6,8 +6,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"passenger_read"}},
+ *     denormalizationContext={"groups"={"passenger_write"}},
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\PassengerRepository")
  */
 class Passenger
@@ -21,21 +27,28 @@ class Passenger
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"passenger_write", "passenger_read"})
+     * @Assert\Length(max="255")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"passenger_write", "passenger_read"})
+     * @Assert\Length(max="255")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"passenger_write", "passenger_read"})
      */
     private $birthday;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"passenger_write", "passenger_read"})
+     * @Assert\Length(max="255")
      */
     private $address;
 

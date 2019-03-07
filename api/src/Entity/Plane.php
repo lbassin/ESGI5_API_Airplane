@@ -29,7 +29,7 @@ class Plane
      * @ORM\Column(type="string", length=8)
      * @Groups({"plane_read"})
      * @Assert\NotBlank()
-     * @Assert\Length(max=8)
+     * @Assert\Length(max="8")
      */
     private $registration;
 
