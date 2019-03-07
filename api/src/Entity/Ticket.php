@@ -6,8 +6,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"ticket_read"}},
+ *     denormalizationContext={"groups"={"ticket_write"}},
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\TicketRepository")
  */
 class Ticket
@@ -21,18 +27,21 @@ class Ticket
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"ticket_write", "ticket_read"})
      */
     private $price;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Passenger", inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $passenger;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Flight", inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull()
      */
     private $flight;
 

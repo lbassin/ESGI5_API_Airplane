@@ -4,8 +4,14 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"dead_read"}},
+ *     denormalizationContext={"groups"={"dead_write"}},
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\DeadRepository")
  */
 class Dead
@@ -20,6 +26,8 @@ class Dead
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Crash", inversedBy="deads")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"dead_write", "dead_read"})
+     * @Assert\NotNull()
      */
     private $crash;
 
