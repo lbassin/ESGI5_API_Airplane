@@ -35,6 +35,8 @@ class Company
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Plane", mappedBy="company", orphanRemoval=true)
+     *
+     * @Groups({"company_read"})
      */
     private $planes;
 
