@@ -68,6 +68,14 @@ class Airport
      */
     private $flights_departure;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Groups({"airport_read", "airport_write"})
+     */
+    private $manager;
+
     public function __construct()
     {
         $this->flights_arrival = new ArrayCollection();
@@ -167,6 +175,18 @@ class Airport
             $this->flights_departure->removeElement($flightsDeparture);
             $flightsDeparture->removeDeparture($this);
         }
+
+        return $this;
+    }
+
+    public function getManager(): ?User
+    {
+        return $this->manager;
+    }
+
+    public function setManager(User $manager): self
+    {
+        $this->manager = $manager;
 
         return $this;
     }
