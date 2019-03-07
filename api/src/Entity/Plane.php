@@ -6,8 +6,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"plane_read"}}
+ * )
+ *
  * @ORM\Entity(repositoryClass="App\Repository\PlaneRepository")
  */
 class Plane
@@ -20,19 +26,28 @@ class Plane
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=8)
+     *
+     * @Groups({"plane_read"})
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max=8)
      */
     private $registration;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="planes")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Groups({"plane_read"})
      */
     private $company;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlaneModel", inversedBy="planes")
      * @ORM\JoinColumn(nullable=false)
+     *
+     * @Groups({"plane_read"})
      */
     private $model;
 
