@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -27,6 +26,7 @@ class Ticket
 
     /**
      * @ORM\Column(type="float")
+     *
      * @Groups({"ticket_write", "ticket_read"})
      */
     private $price;
@@ -40,6 +40,7 @@ class Ticket
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Flight", inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
+     *
      * @Groups({"ticket_write", "ticket_read"})
      */
     private $flight;

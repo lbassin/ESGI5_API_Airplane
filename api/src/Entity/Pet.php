@@ -25,7 +25,9 @@ class Pet
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"pet_write", "pet_read"})
+     *
      * @Assert\Length(max="255")
      * @Assert\NotBlank()
      */

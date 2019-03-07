@@ -30,7 +30,9 @@ class Airport
 
     /**
      * @ORM\Column(type="string", length=3)
+     *
      * @Groups({"airport_read", "airport_write"})
+     *
      * @Assert\Length(min="3", max="3")
      * @Assert\NotBlank()
      */
@@ -38,7 +40,9 @@ class Airport
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"airport_read", "airport_write"})
+     *
      * @Assert\Length(max="255")
      * @Assert\NotBlank()
      */
@@ -46,7 +50,9 @@ class Airport
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"airport_read", "airport_write"})
+     *
      * @Assert\Length(max="255")
      * @Assert\NotBlank()
      */

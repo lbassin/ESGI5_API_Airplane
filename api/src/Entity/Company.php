@@ -27,7 +27,9 @@ class Company
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"company_write", "company_read"})
+     *
      * @Assert\Length(max="255")
      * @Assert\NotBlank()
      */

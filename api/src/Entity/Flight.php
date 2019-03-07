@@ -27,7 +27,9 @@ class Flight
 
     /**
      * @ORM\Column(type="string", length=12)
+     *
      * @Groups({"flight_write", "flight_read"})
+     *
      * @Assert\Length(max="12")
      * @Assert\NotBlank()
      */
@@ -36,7 +38,9 @@ class Flight
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Plane", inversedBy="flights")
      * @ORM\JoinColumn(nullable=false)
+     *
      * @Groups({"flight_write", "flight_read"})
+     *
      * @Assert\NotNull()
      */
     private $plane;

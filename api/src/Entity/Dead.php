@@ -26,7 +26,9 @@ class Dead
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Crash", inversedBy="deads")
      * @ORM\JoinColumn(nullable=false)
+     *
      * @Groups({"dead_write", "dead_read"})
+     *
      * @Assert\NotNull()
      */
     private $crash;

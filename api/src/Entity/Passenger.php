@@ -27,27 +27,34 @@ class Passenger
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"passenger_write", "passenger_read"})
+     *
      * @Assert\Length(max="255")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"passenger_write", "passenger_read"})
+     *
      * @Assert\Length(max="255")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="datetime")
+     *
      * @Groups({"passenger_write", "passenger_read"})
      */
     private $birthday;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
      * @Groups({"passenger_write", "passenger_read"})
+     *
      * @Assert\Length(max="255")
      */
     private $address;
