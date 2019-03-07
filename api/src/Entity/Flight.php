@@ -36,7 +36,7 @@ class Flight
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Plane", inversedBy="flights")
      * @ORM\JoinColumn(nullable=false)
-
+     * @Groups({"flight_write", "flight_read"})
      */
     private $plane;
 
