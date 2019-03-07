@@ -10,6 +10,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"crash_read"}},
+ *     denormalizationContext={"groups"={"crash_write"}},
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\CrashRepository")
  */
 class Crash
@@ -23,16 +27,21 @@ class Crash
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"crash_write", "crash_read"})
+     * @Assert\NotBlank()
      */
     private $date;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"crash_write", "crash_read"})
      */
     private $found;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Flight", mappedBy="crash", cascade={"persist", "remove"})
+     * @Groups({"crash_write", "crash_read"})
+     * @Assert\NotBlank()
      */
     private $flight;
 
