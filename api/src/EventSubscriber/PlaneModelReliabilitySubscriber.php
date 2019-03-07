@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use ApiPlatform\Core\EventListener\EventPriorities;
 use App\Entity\Crash;
+use App\Entity\Plane;
 use App\Repository\FlightRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,13 +25,29 @@ class PlaneModelReliabilitySubscriber implements EventSubscriberInterface
         $entity = $event->getControllerResult();
         $method = $event->getRequest()->getMethod();
 
-        if (!$entity instanceof Crash || $method !== Request::METHOD_POST) {
+        if ($method !== Request::METHOD_POST) {
             return;
         }
 
-        $plane = $entity->getFlight()->getPlane();
-        $planeModel = $plane->getModel();
+        if ($entity instanceof Crash) {
+            $this->updateReliability($entity->getFlight()->getPlane(), false);
+        }
 
+        if ($entity instanceof Plane) {
+            $this->updateReliability($entity, true);
+        }
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            KernelEvents::VIEW => ['onKernelView', EventPriorities::PRE_WRITE],
+        ];
+    }
+
+    private function updateReliability(Plane $plane, bool $planeOrCrash)
+    {
+        $planeModel = $plane->getModel();
         $query = $this->flightRepository->createQueryBuilder("f");
         $results = $query->join("f.plane", "p")
             ->join("p.model", "m")
@@ -39,13 +56,7 @@ class PlaneModelReliabilitySubscriber implements EventSubscriberInterface
             ->setParameter("model_id", $planeModel->getId())
             ->getQuery()->getResult();
 
-        $planeModel->setReliability(floor((count($results) * 100) / count($planeModel->getPlanes())));
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return [
-            KernelEvents::VIEW => ['onKernelView', EventPriorities::PRE_WRITE],
-        ];
+        $planeNumber = count($planeModel->getPlanes()) + ($planeOrCrash ? 1 : 0);
+        $planeModel->setReliability(floor((count($results) * 100) / $planeNumber));
     }
 }
