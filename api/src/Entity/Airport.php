@@ -6,10 +6,18 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *     normalizationContext={"groups"={"airport_read"}},
+ *     denormalizationContext={"groups"={"airport_write"}}
+ * )
  * @ORM\Entity(repositoryClass="App\Repository\AirportRepository")
+ *
+ * @UniqueEntity("code")
  */
 class Airport
 {
@@ -22,16 +30,31 @@ class Airport
 
     /**
      * @ORM\Column(type="string", length=3)
+     *
+     * @Groups({"airport_read", "airport_write"})
+     *
+     * @Assert\Length(min="3", max="3")
+     * @Assert\NotBlank()
      */
     private $code;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"airport_read", "airport_write"})
+     *
+     * @Assert\Length(max="255")
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"airport_read", "airport_write"})
+     *
+     * @Assert\Length(max="255")
+     * @Assert\NotBlank()
      */
     private $address;
 
