@@ -18,7 +18,7 @@ class PlaneModelFixtures extends Fixture
             $name = sprintf("%s%s", $faker->stateAbbr, $faker->buildingNumber);
             $model->setName($name);
 
-            $model->setPlaces($faker->numberBetween(10, 250));
+            $model->setPlaces($faker->numberBetween(10, 25));
             $model->setGazoline($faker->numberBetween(1000, 5000));
 
             $manager->persist($model);
