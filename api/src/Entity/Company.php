@@ -13,7 +13,27 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     normalizationContext={"groups"={"company_read"}},
  *     denormalizationContext={"groups"={"company_write"}},
+ *     collectionOperations={
+ *          "GET"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"
+ *          },
+ *          "POST"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          }
+ *     },
+ *     itemOperations={
+ *          "GET"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"
+ *          },
+ *          "PUT"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          },
+ *          "DELETE"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          }
+ *     }
  * )
+ *
  * @ORM\Entity(repositoryClass="App\Repository\CompanyRepository")
  */
 class Company

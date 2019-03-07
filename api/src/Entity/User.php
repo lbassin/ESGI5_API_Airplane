@@ -26,7 +26,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      *
-     * @Groups({"user_read"})
+     * @Groups({"user_read", "airport_read"})
      */
     private $email;
 

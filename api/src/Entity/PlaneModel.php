@@ -12,7 +12,26 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ApiResource(
  *     normalizationContext={"groups"={"plane_model_read"}},
- *     denormalizationContext={"groups"={"plane_model_write"}}
+ *     denormalizationContext={"groups"={"plane_model_write"}},
+ *     collectionOperations={
+ *          "GET"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"
+ *          },
+ *          "POST"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          }
+ *     },
+ *     itemOperations={
+ *          "GET"={
+ *              "access_control"="is_granted('IS_AUTHENTICATED_ANONYMOUSLY')"
+ *          },
+ *          "PUT"={
+ *              "access_control"="is_granted('ROLE_MANAGER')"
+ *          },
+ *          "DELETE"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\PlaneModelRepository")
  */

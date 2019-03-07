@@ -11,6 +11,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     normalizationContext={"groups"={"dead_read"}},
  *     denormalizationContext={"groups"={"dead_write"}},
+ *     collectionOperations={
+ *          "GET"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          },
+ *          "POST"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          }
+ *     },
+ *     itemOperations={
+ *          "GET"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          },
+ *          "PUT"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          },
+ *          "DELETE"={
+ *              "access_control"="is_granted('ROLE_ADMIN')"
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\DeadRepository")
  */
