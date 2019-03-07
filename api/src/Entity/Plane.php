@@ -27,9 +27,7 @@ class Plane
 
     /**
      * @ORM\Column(type="string", length=8)
-     *
      * @Groups({"plane_read"})
-     *
      * @Assert\NotBlank()
      * @Assert\Length(max=8)
      */
@@ -38,7 +36,6 @@ class Plane
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="planes")
      * @ORM\JoinColumn(nullable=false)
-     *
      * @Groups({"plane_read"})
      */
     private $company;
@@ -46,7 +43,6 @@ class Plane
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlaneModel", inversedBy="planes")
      * @ORM\JoinColumn(nullable=false)
-     *
      * @Groups({"plane_read"})
      */
     private $model;

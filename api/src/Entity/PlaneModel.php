@@ -27,9 +27,7 @@ class PlaneModel
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
      * @Groups({"plane_model_read", "plane_model_write"})
-     *
      * @Assert\NotBlank()
      * @Assert\Length(max="255")
      */
@@ -37,9 +35,7 @@ class PlaneModel
 
     /**
      * @ORM\Column(type="integer")
-     *
      * @Groups({"plane_model_read", "plane_model_write"})
-     *
      * @Assert\NotBlank()
      * @Assert\GreaterThanOrEqual(0)
      */
@@ -47,9 +43,7 @@ class PlaneModel
 
     /**
      * @ORM\Column(type="integer")
-     *
      * @Groups({"plane_model_read", "plane_model_write"})
-     *
      * @Assert\NotBlank()
      * @Assert\GreaterThan(0)
      */
@@ -57,9 +51,7 @@ class PlaneModel
 
     /**
      * @ORM\Column(type="float")
-     *
      * @Groups({"plane_model_read"})
-     *
      * @Assert\GreaterThanOrEqual(0)
      * @Assert\LessThanOrEqual(100)
      */
