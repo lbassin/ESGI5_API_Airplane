@@ -22,7 +22,7 @@ class FlightFixtures extends Fixture implements DependentFixtureInterface
         $faker = \Faker\Factory::create('fr');
         $planes = $this->planeRepository->findAll();
 
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 12; $i++) {
             $flight = new Flight();
 
             $code = sprintf('%s%s%d', $faker->randomLetter, $faker->randomLetter, $faker->numberBetween(1000, 9999));
