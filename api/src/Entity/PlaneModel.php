@@ -80,9 +80,8 @@ class PlaneModel
      * @Groups({"plane_model_read"})
      *
      * @Assert\GreaterThanOrEqual(0)
-     * @Assert\LessThanOrEqual(100)
      */
-    private $reliability;
+    private $reliability = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Plane", mappedBy="model", orphanRemoval=true)
