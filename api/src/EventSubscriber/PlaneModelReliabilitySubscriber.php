@@ -30,33 +30,24 @@ class PlaneModelReliabilitySubscriber implements EventSubscriberInterface
         }
 
         if ($entity instanceof Crash) {
-            $this->updateReliability($entity->getFlight()->getPlane(), false);
+            $this->updateReliability($entity->getFlight()->getPlane());
         }
 
         if ($entity instanceof Plane) {
-            $this->updateReliability($entity, true);
+            $this->updateReliability($entity);
         }
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::VIEW => ['onKernelView', EventPriorities::PRE_WRITE],
+            KernelEvents::VIEW => ['onKernelView', EventPriorities::PRE_WRITE]
         ];
     }
 
-    private function updateReliability(Plane $plane, bool $planeOrCrash)
+    private function updateReliability(Plane $plane)
     {
         $planeModel = $plane->getModel();
-        $query = $this->flightRepository->createQueryBuilder("f");
-        $results = $query->join("f.plane", "p")
-            ->join("p.model", "m")
-            ->where("f.crash IS NOT NULL")
-            ->andWhere("m.id = :model_id")
-            ->setParameter("model_id", $planeModel->getId())
-            ->getQuery()->getResult();
-
-        $planeNumber = count($planeModel->getPlanes()) + ($planeOrCrash ? 1 : 0);
-        $planeModel->setReliability(floor((count($results) * 100) / $planeNumber));
+        $planeModel->setReliability($planeModel->getReliability() + 1);
     }
 }
