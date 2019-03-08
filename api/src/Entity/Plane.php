@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -47,6 +48,7 @@ class Plane
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\PlaneModel", inversedBy="planes")
      * @ORM\JoinColumn(nullable=false)
+     * @ApiSubresource
      *
      * @Groups({"plane_read", "plane_write"})
      */
