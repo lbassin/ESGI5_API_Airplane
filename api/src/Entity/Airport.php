@@ -89,12 +89,18 @@ class Airport
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Flight", mappedBy="arrival")
      */
-    private $flights;
+    private $arrivalFlights;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Flight", mappedBy="departure")
+     */
+    private $departureFlights;
 
 
     public function __construct()
     {
-        $this->flights = new ArrayCollection();
+        $this->arrivalFlights = new ArrayCollection();
+        $this->departureFlights = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,31 +159,17 @@ class Airport
     /**
      * @return Collection|Flight[]
      */
-    public function getFlights(): Collection
+    public function getArrivalFlights(): Collection
     {
-        return $this->flights;
+        return $this->arrivalFlights;
     }
 
-    public function addFlight(Flight $flight): self
+    /**
+     * @return Collection|Flight[]
+     */
+    public function getDepartureFlights(): Collection
     {
-        if (!$this->flights->contains($flight)) {
-            $this->flights[] = $flight;
-            $flight->setArrival($this);
-        }
-
-        return $this;
+        return $this->departureFlights;
     }
 
-    public function removeFlight(Flight $flight): self
-    {
-        if ($this->flights->contains($flight)) {
-            $this->flights->removeElement($flight);
-            // set the owning side to null (unless already changed)
-            if ($flight->getArrival() === $this) {
-                $flight->setArrival(null);
-            }
-        }
-
-        return $this;
-    }
 }

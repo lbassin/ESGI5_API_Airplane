@@ -61,14 +61,14 @@ class Flight
     private $crash;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Airport", inversedBy="flights")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Airport", inversedBy="arrivalFlights")
      *
      * @Groups({"flight_write", "flight_read"})
      */
     private $arrival;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Airport", inversedBy="flights")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Airport", inversedBy="departureFlights")
      *
      * @Groups({"flight_write", "flight_read"})
      */
