@@ -86,6 +86,15 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
+    "easycorp/easy-log-handler": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
+        }
+    },
     "easyrdf/easyrdf": {
         "version": "0.9.1"
     },
@@ -127,6 +136,9 @@
             "version": "2.5",
             "ref": "509b1542f3180a1cfe248ade8b7bf5092c2d4127"
         }
+    },
+    "monolog/monolog": {
+        "version": "1.24.0"
     },
     "namshi/jose": {
         "version": "7.2.3"
@@ -197,6 +209,18 @@
     "symfony/debug": {
         "version": "v4.0.3"
     },
+    "symfony/debug-bundle": {
+        "version": "4.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.1",
+            "ref": "f8863cbad2f2e58c4b65fa1eac892ab189971bea"
+        }
+    },
+    "symfony/debug-pack": {
+        "version": "v1.0.7"
+    },
     "symfony/dependency-injection": {
         "version": "v4.0.3"
     },
@@ -252,6 +276,18 @@
             "branch": "master",
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
+    },
+    "symfony/monolog-bridge": {
+        "version": "v4.2.4"
+    },
+    "symfony/monolog-bundle": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.1",
+            "ref": "18ebf5a940573a20de06f9c4060101eeb438cf3d"
         }
     },
     "symfony/options-resolver": {

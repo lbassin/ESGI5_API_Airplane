@@ -79,16 +79,6 @@ class Airport
     private $address;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Flight", mappedBy="arrival")
-     */
-    private $flights_arrival;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Flight", mappedBy="departure")
-     */
-    private $flights_departure;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      *
@@ -101,10 +91,9 @@ class Airport
      */
     private $flights;
 
+
     public function __construct()
     {
-        $this->flights_arrival = new ArrayCollection();
-        $this->flights_departure = new ArrayCollection();
         $this->flights = new ArrayCollection();
     }
 
@@ -145,62 +134,6 @@ class Airport
     public function setAddress(string $address): self
     {
         $this->address = $address;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Flight[]
-     */
-    public function getFlightsArrival(): Collection
-    {
-        return $this->flights_arrival;
-    }
-
-    public function addFlightArrival(Flight $flight): self
-    {
-        if (!$this->flights_arrival->contains($flight)) {
-            $this->flights_arrival[] = $flight;
-            $flight->addArrival($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFlightArrival(Flight $flight): self
-    {
-        if ($this->flights_arrival->contains($flight)) {
-            $this->flights_arrival->removeElement($flight);
-            $flight->removeArrival($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Flight[]
-     */
-    public function getFlightsDeparture(): Collection
-    {
-        return $this->flights_departure;
-    }
-
-    public function addFlightsDeparture(Flight $flightsDeparture): self
-    {
-        if (!$this->flights_departure->contains($flightsDeparture)) {
-            $this->flights_departure[] = $flightsDeparture;
-            $flightsDeparture->addDeparture($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFlightsDeparture(Flight $flightsDeparture): self
-    {
-        if ($this->flights_departure->contains($flightsDeparture)) {
-            $this->flights_departure->removeElement($flightsDeparture);
-            $flightsDeparture->removeDeparture($this);
-        }
 
         return $this;
     }
