@@ -62,7 +62,7 @@ class Crash
     private $found;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Flight", mappedBy="crash", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Flight", mappedBy="crash", cascade={"persist"})
      *
      * @Groups({"crash_write", "crash_read"})
      *
