@@ -34,8 +34,9 @@ class AirportVoter extends Voter
             return false;
         }
 
-        /** @var Airport $airport */
-        $airport = $subject;
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            return true;
+        }
 
         if ($attribute == self::EDIT) {
             return $this->canEdit($subject, $user);
