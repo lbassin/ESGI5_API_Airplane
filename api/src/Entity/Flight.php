@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as CustomAssert;
 
 /**
  * @ApiResource(
@@ -15,6 +16,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     denormalizationContext={"groups"={"flight_write"}},
  * )
  * @ORM\Entity(repositoryClass="App\Repository\FlightRepository")
+ *
+ * @CustomAssert\Airport()
  */
 class Flight
 {
@@ -47,18 +50,6 @@ class Flight
     private $plane;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Airport", inversedBy="flights_arrival")
-     * @ORM\JoinTable(name="flight_airport_arrival")
-     */
-    private $arrival;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Airport", inversedBy="flights_departure")
-     * @ORM\JoinTable(name="flight_airport_departure")
-     */
-    private $departure;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ticket", mappedBy="flight", orphanRemoval=true)
      */
     private $tickets;
@@ -68,10 +59,22 @@ class Flight
      */
     private $crash;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Airport", inversedBy="flights")
+     *
+     * @Groups({"flight_write", "flight_read"})
+     */
+    private $arrival;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Airport", inversedBy="flights")
+     *
+     * @Groups({"flight_write", "flight_read"})
+     */
+    private $departure;
+
     public function __construct()
     {
-        $this->arrival = new ArrayCollection();
-        $this->departure = new ArrayCollection();
         $this->tickets = new ArrayCollection();
     }
 
@@ -100,58 +103,6 @@ class Flight
     public function setPlane(?Plane $plane): self
     {
         $this->plane = $plane;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Airport[]
-     */
-    public function getArrival(): Collection
-    {
-        return $this->arrival;
-    }
-
-    public function addArrival(Airport $arrival): self
-    {
-        if (!$this->arrival->contains($arrival)) {
-            $this->arrival[] = $arrival;
-        }
-
-        return $this;
-    }
-
-    public function removeArrival(Airport $arrival): self
-    {
-        if ($this->arrival->contains($arrival)) {
-            $this->arrival->removeElement($arrival);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Airport[]
-     */
-    public function getDeparture(): Collection
-    {
-        return $this->departure;
-    }
-
-    public function addDeparture(Airport $departure): self
-    {
-        if (!$this->departure->contains($departure)) {
-            $this->departure[] = $departure;
-        }
-
-        return $this;
-    }
-
-    public function removeDeparture(Airport $departure): self
-    {
-        if ($this->departure->contains($departure)) {
-            $this->departure->removeElement($departure);
-        }
 
         return $this;
     }
@@ -195,6 +146,30 @@ class Flight
     public function setCrash(?Crash $crash): self
     {
         $this->crash = $crash;
+
+        return $this;
+    }
+
+    public function getArrival(): ?Airport
+    {
+        return $this->arrival;
+    }
+
+    public function setArrival(?Airport $arrival): self
+    {
+        $this->arrival = $arrival;
+
+        return $this;
+    }
+
+    public function getDeparture(): ?Airport
+    {
+        return $this->departure;
+    }
+
+    public function setDeparture(?Airport $departure): self
+    {
+        $this->departure = $departure;
 
         return $this;
     }

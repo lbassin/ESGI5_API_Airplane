@@ -79,16 +79,6 @@ class Airport
     private $address;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Flight", mappedBy="arrival")
-     */
-    private $flights_arrival;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Flight", mappedBy="departure")
-     */
-    private $flights_departure;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      *
@@ -96,10 +86,15 @@ class Airport
      */
     private $manager;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Flight", mappedBy="arrival")
+     */
+    private $flights;
+
+
     public function __construct()
     {
-        $this->flights_arrival = new ArrayCollection();
-        $this->flights_departure = new ArrayCollection();
+        $this->flights = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,62 +138,6 @@ class Airport
         return $this;
     }
 
-    /**
-     * @return Collection|Flight[]
-     */
-    public function getFlightsArrival(): Collection
-    {
-        return $this->flights_arrival;
-    }
-
-    public function addFlightArrival(Flight $flight): self
-    {
-        if (!$this->flights_arrival->contains($flight)) {
-            $this->flights_arrival[] = $flight;
-            $flight->addArrival($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFlightArrival(Flight $flight): self
-    {
-        if ($this->flights_arrival->contains($flight)) {
-            $this->flights_arrival->removeElement($flight);
-            $flight->removeArrival($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Flight[]
-     */
-    public function getFlightsDeparture(): Collection
-    {
-        return $this->flights_departure;
-    }
-
-    public function addFlightsDeparture(Flight $flightsDeparture): self
-    {
-        if (!$this->flights_departure->contains($flightsDeparture)) {
-            $this->flights_departure[] = $flightsDeparture;
-            $flightsDeparture->addDeparture($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFlightsDeparture(Flight $flightsDeparture): self
-    {
-        if ($this->flights_departure->contains($flightsDeparture)) {
-            $this->flights_departure->removeElement($flightsDeparture);
-            $flightsDeparture->removeDeparture($this);
-        }
-
-        return $this;
-    }
-
     public function getManager(): ?User
     {
         return $this->manager;
@@ -207,6 +146,37 @@ class Airport
     public function setManager(User $manager): self
     {
         $this->manager = $manager;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Flight[]
+     */
+    public function getFlights(): Collection
+    {
+        return $this->flights;
+    }
+
+    public function addFlight(Flight $flight): self
+    {
+        if (!$this->flights->contains($flight)) {
+            $this->flights[] = $flight;
+            $flight->setArrival($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFlight(Flight $flight): self
+    {
+        if ($this->flights->contains($flight)) {
+            $this->flights->removeElement($flight);
+            // set the owning side to null (unless already changed)
+            if ($flight->getArrival() === $this) {
+                $flight->setArrival(null);
+            }
+        }
 
         return $this;
     }
