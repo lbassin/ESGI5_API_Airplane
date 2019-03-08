@@ -12,6 +12,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *     normalizationContext={"groups"={"ticket_read"}},
  *     denormalizationContext={"groups"={"ticket_write"}},
+ *     collectionOperations={
+ *          "GET"
+ *     },
+ *     itemOperations={
+ *          "GET",
+ *          "PUT",
+ *          "PDF"={
+ *              "method"="GET",
+ *              "path"="/tickets/{id}/pdf",
+ *              "controller"=App\Controller\Ticket\Pdf::class,
+ *          }
+ *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\TicketRepository")
  */

@@ -90,6 +90,19 @@ VOLUME /srv/api/var
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
+# Install all dependencies.
+RUN apk --no-cache update \
+    && apk --no-cache upgrade \
+    && apk add --no-cache $PHPIZE_DEPS \
+        freetype \
+        freetype-dev \
+        libjpeg-turbo \
+        libjpeg-turbo-dev \
+        libpng \
+        libpng-dev && \
+    docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ && \
+    docker-php-ext-install -j$(getconf _NPROCESSORS_ONLN) gd
+
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
 
