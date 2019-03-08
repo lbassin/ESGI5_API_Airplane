@@ -48,6 +48,8 @@ class Crash
     private $id;
 
     /**
+     * This field contains the date of the crash
+     *
      * @ORM\Column(type="datetime")
      *
      * @Groups({"crash_write", "crash_read"})
@@ -58,6 +60,8 @@ class Crash
     private $date;
 
     /**
+     * Has the airplane been found ?
+     *
      * @ORM\Column(type="boolean")
      *
      * @Groups({"crash_write", "crash_read"})
@@ -65,6 +69,8 @@ class Crash
     private $found = false;
 
     /**
+     * Rest in peace
+     *
      * @ORM\OneToOne(targetEntity="App\Entity\Flight", mappedBy="crash", cascade={"persist"})
      *
      * @Groups({"crash_write", "crash_read"})
