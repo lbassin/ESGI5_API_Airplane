@@ -47,6 +47,8 @@ class Passenger
      * @ORM\Column(type="datetime")
      *
      * @Groups({"passenger_write", "passenger_read"})
+     *
+     * @Assert\LessThan(value="-18 years")
      */
     private $birthday;
 

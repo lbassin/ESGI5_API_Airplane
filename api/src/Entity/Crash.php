@@ -49,6 +49,7 @@ class Crash
      *
      * @Groups({"crash_write", "crash_read"})
      *
+     * @Assert\LessThan(value="today")
      * @Assert\NotBlank()
      */
     private $date;

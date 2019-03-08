@@ -30,8 +30,9 @@ class Flight
      *
      * @Groups({"flight_write", "flight_read"})
      *
-     * @Assert\Length(max="12")
      * @Assert\NotBlank()
+     * @Assert\Length(max="6")
+     * @Assert\Regex(pattern="/[a-z]{2}[0-9]{4}/i")
      */
     private $code;
 
