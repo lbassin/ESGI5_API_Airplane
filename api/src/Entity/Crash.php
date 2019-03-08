@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator as CustomAssert;
 
 /**
  * @ApiResource(
@@ -34,6 +35,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @ORM\Entity(repositoryClass="App\Repository\CrashRepository")
+ *
+ * @CustomAssert\PlaneCrash()
  */
 class Crash
 {
@@ -59,10 +62,10 @@ class Crash
      *
      * @Groups({"crash_write", "crash_read"})
      */
-    private $found;
+    private $found = false;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Flight", mappedBy="crash", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Flight", mappedBy="crash", cascade={"persist"})
      *
      * @Groups({"crash_write", "crash_read"})
      *

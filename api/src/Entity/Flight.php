@@ -55,7 +55,8 @@ class Flight
     private $tickets;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Crash", inversedBy="flight", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Crash", inversedBy="flight", cascade={"persist"})
+     * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $crash;
 
